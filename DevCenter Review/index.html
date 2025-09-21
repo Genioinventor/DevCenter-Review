@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevCenter Reviews</title>
+    <meta name="description" content="DevCenter Reviews: El centro de desarrollo líder que impulsa la innovación tecnológica. Comparte tu experiencia y ayuda a otros desarrolladores.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Enhanced styles for modern interface -->
+    <style>
+        /* Solo estilos esenciales para prevenir FOUC */
+        .hidden { display: none !important; }
+        
+        .hidden { 
+            display: none !important;
+        }
+
+        /* Variables ya definidas en styles.css - eliminadas para evitar conflictos */
+
+        /* Estilos de header movidos a styles.css */
+
+        /* Estilos de hero movidos a styles.css */
+
+        /* Estilos de títulos movidos a styles.css */
+
+        /* Estilos de botones movidos a styles.css */
+
+        /* Estilos de secciones movidos a styles.css */
+
+        /* Estilos de inputs movidos a styles.css */
+
+        /* Rating stars enhancement */
+        .rating .stars svg {
+            color: #ffd700;
+            filter: drop-shadow(0 2px 4px rgba(255, 215, 0, 0.3));
+        }
+
+        /* Reviews section enhancement */
+        .reviews-section {
+            margin: 3rem 0;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .review-card {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .review-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .review-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .review-rating {
+            font-size: 1.2rem;
+        }
+
+        .review-author {
+            color: var(--muted-foreground);
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .review-content {
+            color: var(--foreground);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .loading-message {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 2rem;
+            color: var(--muted-foreground);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .review-card {
+                background: var(--muted);
+                border-left-color: var(--primary);
+            }
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero .card {
+                padding: 2rem;
+            }
+            
+            .form-section .card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Dark mode ya configurado en styles.css */
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <svg class="logo-icon" viewBox="0 0 24 24">
+                        <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L19.2 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                    </svg>
+                    DevCenter Reviews
+                </a>
+                
+                <!-- User menu when logged in (only profile and name) -->
+                <div id="user-menu" class="user-menu hidden">
+                    <img id="user-avatar" class="user-avatar" src="attached_assets/image_1758403617129.png" alt="Avatar">
+                    <span id="user-name" class="user-name-text"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section id="inicio" class="hero">
+            <div class="card animate-fade-in">
+                <div class="hero-content">
+                    <h1 class="animate-slide-up">DevCenter Reviews</h1>
+                    <p class="animate-slide-up" style="font-size: 1.2rem; margin: 2rem 0; color: var(--primary); font-weight: 600; animation-delay: 200ms;">
+                        Inicia sesión con tu cuenta de DevCenter o crea una cuenta
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Auth Section - Now Primary Focus -->
+        <section id="login" class="form-section">
+            <h2 class="section-title">🔐 Acceso a DevCenter</h2>
+            <p style="text-align: center; color: var(--muted-foreground); margin-bottom: 2rem; font-size: 1.1rem;">
+                Inicia sesión o crea tu cuenta para acceder al dashboard y gestionar reseñas
+            </p>
+            
+            <div class="auth-container">
+                <!-- Login Form -->
+                <div id="login-form-container" class="form animate-scale-in">
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label class="form-label" for="login-usuario">👤 Usuario</label>
+                            <input type="text" id="login-usuario" name="usuario" class="form-input" required placeholder="Ingresa tu usuario">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="login-contrasena">🔒 Contraseña</label>
+                            <input type="password" id="login-contrasena" name="contrasena" class="form-input" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">🚀 Iniciar Sesión</button>
+                    </form>
+                    
+                    <p class="auth-switch">
+                        ¿No tienes cuenta? <a href="#" id="show-register">Regístrate aquí</a>
+                    </p>
+                </div>
+
+                <!-- Register Form -->
+                <div id="register-form-container" class="form hidden animate-scale-in">
+                    <form id="register-form">
+                        <div class="form-group">
+                            <label class="form-label" for="register-usuario">👤 Usuario</label>
+                            <input type="text" id="register-usuario" name="usuario" class="form-input" required placeholder="Ej: maria, justin">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="register-email">📧 Correo electrónico</label>
+                            <input type="email" id="register-email" name="correo_electronico" class="form-input" required placeholder="tu@example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="register-password">🔒 Contraseña</label>
+                            <input type="password" id="register-password" name="contrasena" class="form-input" required minlength="3">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="register-confirm">🔒 Confirmar contraseña</label>
+                            <input type="password" id="register-confirm" name="confirmPassword" class="form-input" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">✨ Crear Cuenta</button>
+                    </form>
+                    
+                    <p class="auth-switch">
+                        ¿Ya tienes cuenta? <a href="#" id="show-login">Inicia sesión aquí</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="perfil" class="form-section hidden">
+            <h2 class="section-title">Mi Perfil</h2>
+            
+            <div id="profile-content" class="profile-container">
+                <!-- Profile Info -->
+                <div class="profile-info card">
+                    <div class="profile-header">
+                        <div class="profile-avatar-container">
+                            <img id="profile-avatar-display" class="profile-avatar" src="" alt="Foto de perfil">
+                            <button id="change-avatar-btn" class="btn btn-ghost btn-sm avatar-change-btn">
+                                📷 Cambiar foto
+                            </button>
+                        </div>
+                        <div class="profile-details">
+                            <h3 id="profile-name"></h3>
+                            <p id="profile-email"></p>
+                            <p class="profile-joined">Miembro desde: <span id="profile-joined-date"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Management -->
+                <div class="image-management card">
+                    <h3>Gestión de Imágenes</h3>
+                    
+                    <!-- Upload Section -->
+                    <div class="upload-section">
+                        <div class="upload-area" id="upload-area">
+                            <div class="upload-content">
+                                <div class="upload-icon">📷</div>
+                                <p>Arrastra una imagen aquí o haz clic para seleccionar</p>
+                                <input type="file" id="image-upload" accept="image/*" multiple>
+                                <button class="btn btn-primary">Seleccionar Imágenes</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image Gallery -->
+                    <div class="image-gallery">
+                        <h4>Mis Imágenes</h4>
+                        <div id="user-images" class="images-grid">
+                            <!-- Images will be loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Settings -->
+                <div class="profile-settings card">
+                    <h3>Configuración de Perfil</h3>
+                    
+                    <form id="profile-settings-form">
+                        <div class="form-group">
+                            <label class="form-label" for="profile-name-edit">Nombre</label>
+                            <input type="text" id="profile-name-edit" name="name" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="profile-email-edit">Correo</label>
+                            <input type="email" id="profile-email-edit" name="email" class="form-input" required readonly>
+                            <small class="form-help">El correo no puede ser modificado</small>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                            <button type="button" id="profile-logout-btn" class="btn btn-secondary logout-btn">
+                                🚪 Cerrar Sesión
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Not logged in message -->
+            <div id="profile-auth-required" class="auth-message hidden">
+                <p>Debes <a href="#login" class="auth-link">iniciar sesión</a> para acceder a tu perfil.</p>
+            </div>
+        </section>
+
+        <!-- User Dashboard Navigation - shown when logged in -->
+        <section id="user-navigation" class="user-dashboard-nav hidden">
+            <div class="dashboard-welcome">
+                <h2>¡Bienvenido de vuelta! 👋</h2>
+                <p>¿Qué te gustaría hacer hoy?</p>
+            </div>
+            <div class="dashboard-actions">
+                <button onclick="showSection('escribir-resena')" class="dashboard-btn primary animate-slide-up" style="animation-delay: 100ms;">
+                    <span class="btn-icon">✏️</span>
+                    <span class="btn-text">
+                        <strong>Escribir Reseña</strong>
+                        <small>Comparte tu experiencia</small>
+                    </span>
+                </button>
+                <button onclick="showSection('reseñas')" class="dashboard-btn animate-slide-up" style="animation-delay: 200ms;">
+                    <span class="btn-icon">📝</span>
+                    <span class="btn-text">
+                        <strong>Ver Reseñas</strong>
+                        <small>Explora la comunidad</small>
+                    </span>
+                </button>
+                <button onclick="showSection('estadisticas')" class="dashboard-btn animate-slide-up" style="animation-delay: 300ms;">
+                    <span class="btn-icon">📈</span>
+                    <span class="btn-text">
+                        <strong>Estadísticas</strong>
+                        <small>Analiza los datos</small>
+                    </span>
+                </button>
+                <button onclick="showSection('perfil')" class="dashboard-btn animate-slide-up" style="animation-delay: 400ms;">
+                    <span class="btn-icon">👤</span>
+                    <span class="btn-text">
+                        <strong>Mi Perfil</strong>
+                        <small>Configuración y ajustes</small>
+                    </span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Write Review Section -->
+        <section id="escribir-resena" class="form-section hidden" style="margin-top: 2rem;">
+            <div class="card">
+                <h2 class="section-title">✨ Escribir Nueva Reseña</h2>
+                <p style="text-align: center; color: var(--muted-foreground); margin-bottom: 2rem;">
+                    Comparte tu experiencia con DevCenter
+                </p>
+                
+                <div id="success-message" class="success-message hidden">
+                    🎉 ¡Gracias por tu reseña! Tu opinión es muy valiosa para nosotros.
+                </div>
+                
+                <div id="sending-message" class="sending-message hidden">
+                    📤 Enviando tu reseña, por favor espera...
+                </div>
+                
+                <form id="review-form">
+                    <div class="form-group">
+                        <label class="form-label" for="title">🏷️ Título de la reseña</label>
+                        <input type="text" id="title" name="title" class="form-input" maxlength="100" required placeholder="Ej: Excelente experiencia de desarrollo">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="rating">⭐ Calificación</label>
+                        <div class="star-rating-select">
+                            <select id="rating" name="rating" class="form-select" required>
+                                <option value="">Selecciona una calificación</option>
+                                <option value="5">⭐⭐⭐⭐⭐ Excelente</option>
+                                <option value="4">⭐⭐⭐⭐ Muy bueno</option>
+                                <option value="3">⭐⭐⭐ Bueno</option>
+                                <option value="2">⭐⭐ Regular</option>
+                                <option value="1">⭐ Necesita mejorar</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="content">📝 Tu experiencia</label>
+                        <textarea id="content" name="content" class="form-textarea" maxlength="500" placeholder="Comparte los detalles de tu experiencia con DevCenter..." required rows="5"></textarea>
+                        <small class="form-help">Máximo 500 caracteres</small>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">🚀 Publicar Reseña</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section id="reseñas" class="reviews-section hidden" style="margin-top: 3rem;">
+            <div class="card">
+                <h2 class="section-title">⭐ Reseñas de la Comunidad</h2>
+                <p style="text-align: center; color: var(--muted-foreground); margin-bottom: 2rem;">
+                    Descubre lo que otros desarrolladores están diciendo sobre DevCenter
+                </p>
+                
+                <!-- Reviews Grid -->
+                <div id="reviews-grid" class="reviews-grid">
+                    <!-- Reviews are loaded dynamically by script.js -->
+                    <div class="loading-message">
+                        <div class="loading-spinner"></div>
+                        <p>Cargando reseñas...</p>
+                    </div>
+                </div>
+                
+                <!-- Show More Button -->
+                <div class="text-center" style="margin-top: 2rem;">
+                    <button id="show-more-reviews" class="btn btn-ghost hidden">Ver Más Reseñas</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section id="estadisticas" class="form-section hidden" style="margin-top: 3rem;">
+            <div class="card">
+                <h2 class="section-title">📄 Estadísticas</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                    <div style="background: white; padding: 1.5rem; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div style="font-size: 2rem; font-weight: 700; color: var(--primary);" data-rating="average">4.8</div>
+                        <p style="margin: 0; color: var(--muted-foreground);">Calificación Promedio</p>
+                    </div>
+                    <div style="background: white; padding: 1.5rem; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div style="font-size: 2rem; font-weight: 700; color: var(--primary);" data-rating="count">124</div>
+                        <p style="margin: 0; color: var(--muted-foreground);">Total Reseñas</p>
+                    </div>
+                    <div style="background: white; padding: 1.5rem; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div style="font-size: 2rem; font-weight: 700; color: var(--primary);" id="user-reviews-count">0</div>
+                        <p style="margin: 0; color: var(--muted-foreground);">Mis Reseñas</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="theme-toggle" title="Cambiar tema">🌓</button>
+    
+    <!-- Load scripts at the end for better performance -->
+    <script src="config.js" defer></script>
+    <script src="api.js" defer></script>
+    <script src="script.js" defer></script>
+    
+    <!-- All functionality is handled by script.js -->
+</body>
+</html>
